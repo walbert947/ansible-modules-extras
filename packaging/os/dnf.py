@@ -336,6 +336,8 @@ def main():
     if params['list']:
         list_items(module, base, params['list'])
     else:
+        if os.geteuid() != 0:
+            module.fail_json(msg='The dnf module must be executed as the root user')
         ensure(module, base, params['state'], params['name'])
 
 
