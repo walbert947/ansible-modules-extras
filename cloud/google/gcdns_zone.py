@@ -7,6 +7,8 @@
 """
 Copyright (C) 2015 CallFire Inc.
 
+This file is part of Ansible.
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -39,21 +41,19 @@ options:
         description:
             - Whether the given zone should or should not be present.
         required: false
-        choices: ["present", "absent"]
+        choices: [ "present", "absent" ]
         default: "present"
-        version_added: "2.0"
     zone:
         description:
             - The DNS domain name of the zone.
         required: true
         default: null
-        version_added: "2.0"
+        aliases: [ "name" ]
     description:
         description:
             - An arbitrary text string to use for the zone description.
         required: false
         default: ""
-        version_added: "2.0"
     require_extra:
         description:
             - Determines if the value of the extra parameters are considered
@@ -71,29 +71,25 @@ options:
               setting is set to "no", the module will only use the domain name
               in determining whether to make a configuration change.
         required: false
-        choices: ["yes", "no"]
+        choices: [ "yes", "no" ]
         default: "no"
-        version_added: "2.0"
     service_account_email:
         description:
             - The e-mail address for a service account with access to Google
               Cloud DNS.
         required: false
         default: null
-        version_added: "2.0"
     pem_file:
         description:
             - The path to the PEM or JSON file with the service account's
               private key.
         required: false
         default: null
-        version_added: "2.0"
     project_id:
         description:
             - The Google Cloud Platform project ID to use.
         required: false
         default: null
-        version_added: "2.0"
 '''
 
 EXAMPLES = '''
@@ -276,7 +272,7 @@ def main():
     module = AnsibleModule(
         argument_spec = dict(
             state                 = dict(required=False, default='present', choices=['present', 'absent'], type='str'),
-            zone                  = dict(required=True, type='str'),
+            zone                  = dict(required=True, type='str', aliases=['name']),
             description           = dict(required=False, default='', type='str'),
             require_extra         = dict(required=False, default=False, choices=BOOLEANS, type='str'),
             service_account_email = dict(required=False, default=None, type='str'),

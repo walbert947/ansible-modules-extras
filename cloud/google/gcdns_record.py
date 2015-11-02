@@ -7,6 +7,8 @@
 """
 Copyright (C) 2015 CallFire Inc.
 
+This file is part of Ansible.
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
@@ -39,27 +41,24 @@ options:
         description:
             - Whether the given resource record should or should not be present.
         required: false
-        choices: ["present", "absent"]
+        choices: [ "present", "absent" ]
         default: "present"
-        version_added: "2.0"
     record:
         description:
             - The fully-qualified DNS name of the resource record.
         required: true
-        version_added: "2.0"
+        aliases: [ "name" ]
     zone:
         description:
             - The DNS domain name of the zone for the resource record.
         required: true
-        version_added: "2.0"
     type:
         description:
             - The type of resource record to add (A, MX, CNAME, ...).
             - See U(https://cloud.google.com/dns/what-is-cloud-dns#supported_record_types)
               for the record types that Google Cloud DNS supports.
-            - Note: NAPTR records are not supported by this module.
+            - "Note: NAPTR records are not supported by this module."
         required: true
-        version_added: "2.0"
     values:
         description:
             - The values to use for the resource record. All resource records
@@ -76,14 +75,12 @@ options:
             - If the state is 'absent' and overwrite is 'yes', this parameter
               will be ignored and can simply be provided with an empty list.
         required: true
-        version_added: "2.0"
     ttl:
         description:
             - The amount of time, in seconds, that a resource record will
               remain cached by a caching nameserver.
         required: false
         default: 300
-        version_added: "2.0"
     overwrite:
         description:
             - Whether an attempt to overwrite an existing record should succeed
@@ -101,27 +98,23 @@ options:
         required: false
         choices: ["yes", "no"]
         default: "no"
-        version_added: "2.0"
     service_account_email:
         description:
             - The e-mail address for a service account with access to Google
               Cloud DNS.
         required: false
         default: null
-        version_added: "2.0"
     pem_file:
         description:
             - The path to the PEM or JSON file with the service account's
               private key.
         required: false
         default: null
-        version_added: "2.0"
     project_id:
         description:
             - The Google Cloud Platform project ID to use.
         required: false
         default: null
-        version_added: "2.0"
 '''
 
 EXAMPLES = '''
@@ -331,7 +324,7 @@ def main():
     module = AnsibleModule(
         argument_spec = dict(
             state                 = dict(default='present', choices=['present', 'absent'], type='str'),
-            record                = dict(required=True, type='str'),
+            record                = dict(required=True, type='str', aliases=['name']),
             zone                  = dict(required=True, type='str'),
             type                  = dict(required=True, type='str'),
             values                = dict(required=True, type='list'),
