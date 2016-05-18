@@ -49,19 +49,23 @@ options:
     zone:
         description:
             - The DNS domain name of the zone (e.g., example.com).
+            - One of either I(zone) or I(zone_id) must be specified as an
+              option, or the module will fail.
             - If both I(zone) and I(zone_id) are specifed, I(zone_id) will be
               used.
-        required: true if I(zone_id) is not specified
+        required: false
     zone_id:
         description:
             - The Google Cloud ID of the zone (e.g., example-com).
+            - One of either I(zone) or I(zone_id) must be specified as an
+              option, or the module will fail.
             - These usually take the form of domain names with the dots replaced
               with dashes. A zone ID will never have any dots in it.
             - I(zone_id) can be faster than I(zone) in projects with a large
               number of zones.
             - If both I(zone) and I(zone_id) are specifed, I(zone_id) will be
               used.
-        required: true if I(zone) is not specified
+        required: false
     type:
         description:
             - The type of resource record to add.
@@ -70,6 +74,8 @@ options:
     values:
         description:
             - The values to use for the resource record.
+            - I(values) must be specified if I(state) is C(present) or
+              I(overwrite) is C(True), or the module will fail.
             - Valid values vary based on the record's I(type). In addition,
               resource records that contain a DNS domain name in the value
               field (e.g., CNAME, PTR, SRV, .etc) MUST include a trailing dot
@@ -79,7 +85,7 @@ options:
             - For resource records that have the same name but different
               values (e.g., multiple A records), they must be defined as
               multiple list entries in a single record.
-        required: true if I(state) is C(present) or I(overwrite) is C(True)
+        required: false
     ttl:
         description:
             - The amount of time in seconds that a resource record will remain
