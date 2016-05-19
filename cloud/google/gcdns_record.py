@@ -671,7 +671,7 @@ def main():
             type                  = dict(required=True, choices=SUPPORTED_RECORD_TYPES, type='str'),
             values                = dict(type='list'),
             ttl                   = dict(default=300, type='int'),
-            overwrite             = dict(default=False, choices=BOOLEANS, type='bool'),
+            overwrite             = dict(default=False, type='bool'),
             service_account_email = dict(type='str'),
             pem_file              = dict(type='path'),
             credentials_file      = dict(type='path'),
