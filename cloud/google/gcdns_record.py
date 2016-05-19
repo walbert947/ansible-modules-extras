@@ -86,6 +86,7 @@ options:
               values (e.g., multiple A records), they must be defined as
               multiple list entries in a single record.
         required: false
+        aliases: ['value']
     ttl:
         description:
             - The amount of time in seconds that a resource record will remain
@@ -153,7 +154,7 @@ EXAMPLES = '''
     record: 'www1.example.com'
     zone: 'example.com'
     type: A
-    values: ['1.2.3.4']
+    value: '1.2.3.4'
 
 # Update an existing record.
 - gcdns_record:
@@ -161,7 +162,7 @@ EXAMPLES = '''
     zone: 'example.com'
     type: A
     overwrite: true
-    values: ['5.6.7.8']
+    value: '5.6.7.8'
 
 # Remove an A record.
 - gcdns_record:
@@ -169,14 +170,14 @@ EXAMPLES = '''
     zone_id: 'example-com'
     state: absent
     type: A
-    values: ['5.6.7.8']
+    value: '5.6.7.8'
 
 # Create a CNAME record.
 - gcdns_record:
     record: 'www.example.com'
     zone_id: 'example-com'
     type: CNAME
-    values: ['www.example.com.']    # Note the trailing dot
+    value: 'www.example.com.'    # Note the trailing dot
 
 # Create an MX record with a custom TTL.
 - gcdns_record:
@@ -184,7 +185,7 @@ EXAMPLES = '''
     zone: 'example.com'
     type: MX
     ttl: 3600
-    values: ['10 mail.example.com.']    # Note the trailing dot
+    value: '10 mail.example.com.'    # Note the trailing dot
 
 # Create multiple A records with the same name.
 - gcdns_record:
@@ -234,14 +235,14 @@ EXAMPLES = '''
     record: 'www1.example.com'
     zone: 'example.com'
     type: AAAA
-    values: ['fd00:db8::1']
+    value: 'fd00:db8::1'
 
 # Create a PTR record
 - gcdns_record:
     record: '10.5.168.192.in-addr.arpa'
     zone: '5.168.192.in-addr.arpa'
     type: PTR
-    values: ['api.example.com.']    # Note the trailing dot.
+    value: 'api.example.com.'    # Note the trailing dot.
 
 # Create an NS record
 - gcdns_record:
@@ -669,7 +670,7 @@ def main():
             zone                  = dict(type='str'),
             zone_id               = dict(type='str'),
             type                  = dict(required=True, choices=SUPPORTED_RECORD_TYPES, type='str'),
-            values                = dict(type='list'),
+            values                = dict(aliases=['value'], type='list'),
             ttl                   = dict(default=300, type='int'),
             overwrite             = dict(default=False, type='bool'),
             service_account_email = dict(type='str'),
